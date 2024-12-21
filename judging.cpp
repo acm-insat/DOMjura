@@ -4,36 +4,44 @@
 
 #include "submission.h"
 
-namespace DJ {
-namespace Model {
-
-Judging::Judging(QJsonObject judging,
-                 QHash<QString, Submission *> submissions,
-                 QObject *parent) : QObject(parent)
+namespace DJ
 {
-    this->id = judging.value("id").toInt();
-    QString submissionId = judging.value("submission_id").toString();
-    if (submissions.contains(submissionId)) {
-        this->submission = submissions[submissionId];
-    } else {
-        this->submission = nullptr;
-    }
+    namespace Model
+    {
 
-    QString outcome = judging.value("judgement_type_id").toString("?");
-    this->correct = outcome == "AC";
-}
+        Judging::Judging(QJsonObject judging,
+                         QHash<QString, Submission *> submissions,
+                         QObject *parent) : QObject(parent)
+        {
+            this->id = judging.value("id").toInt();
+            QString submissionId = judging.value("submission_id").toString();
+            if (submissions.contains(submissionId))
+            {
+                this->submission = submissions[submissionId];
+            }
+            else
+            {
+                this->submission = nullptr;
+            }
 
-int Judging::getId() {
-    return this->id;
-}
+            QString outcome = judging.value("judgement_type_id").toString("?");
+            this->correct = outcome == "AC";
+        }
 
-Submission *Judging::getSubmission() {
-    return this->submission;
-}
+        int Judging::getId()
+        {
+            return this->id;
+        }
 
-bool Judging::isCorrect() {
-    return this->correct;
-}
+        Submission *Judging::getSubmission()
+        {
+            return this->submission;
+        }
 
-} // namespace Model
+        bool Judging::isCorrect()
+        {
+            return this->correct;
+        }
+
+    } // namespace Model
 } // namespace DJ

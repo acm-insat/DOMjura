@@ -1,6 +1,6 @@
 /** \file settingsdialog.h
-  * \brief Contains the settings dialog.
-  */
+ * \brief Contains the settings dialog.
+ */
 #ifndef SETTINGSDIALOG_H
 #define SETTINGSDIALOG_H
 
@@ -8,51 +8,53 @@
 #include <QSettings>
 #include <QAbstractButton>
 
-namespace DJ {
-namespace View {
-
-namespace Ui {
-    class SettingsDialog;
-}
-
-/** The settings dialog (this uses a Qt Designer form).
-  */
-class SettingsDialog : public QDialog
+namespace DJ
 {
-    Q_OBJECT
+  namespace View
+  {
 
-public:
-    /** Constructs a new settings dialog.
-      * \param parent The parent of this widget.
-      */
-    explicit SettingsDialog(QWidget *parent = 0);
-    /** Destructs this settings dialog.
-      */
-    ~SettingsDialog();
+    namespace Ui
+    {
+      class SettingsDialog;
+    }
 
-public slots:
-    /** Opens the settings dialog (and reloads the settings).
-      */
-    int exec();
-    /** Closes the dialog and saves the settings.
-      */
-    void accept();
+    /** The settings dialog (this uses a Qt Designer form).
+     */
+    class SettingsDialog : public QDialog
+    {
+      Q_OBJECT
 
-private slots:
-    void on_buttonBox_clicked(QAbstractButton* button);
-    void on_buttonBrandingBrowse_clicked();
-    void on_buttonBrandingClear_clicked();
+    public:
+      /** Constructs a new settings dialog.
+       * \param parent The parent of this widget.
+       */
+      explicit SettingsDialog(QWidget *parent = 0);
+      /** Destructs this settings dialog.
+       */
+      ~SettingsDialog();
 
-private:
-    void reloadSettings();
-    void applyChanges();
-    void setBrandingImage(QString filename);
+    public slots:
+      /** Opens the settings dialog (and reloads the settings).
+       */
+      int exec();
+      /** Closes the dialog and saves the settings.
+       */
+      void accept();
 
-    Ui::SettingsDialog *ui;
-    QSettings settings;
-};
+    private slots:
+      void on_buttonBox_clicked(QAbstractButton *button);
+      void on_buttonBrandingBrowse_clicked();
+      void on_buttonBrandingClear_clicked();
 
+    private:
+      void reloadSettings();
+      void applyChanges();
+      void setBrandingImage(QString filename);
 
-} // namespace View
+      Ui::SettingsDialog *ui;
+      QSettings settings;
+    };
+
+  } // namespace View
 } // namespace DJ
 #endif // SETTINGSDIALOG_H

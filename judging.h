@@ -3,33 +3,35 @@
 
 #include <QObject>
 
-namespace DJ {
-namespace Model {
-
-class Submission;
-
-class Judging : public QObject
+namespace DJ
 {
-    Q_OBJECT
-public:
-    explicit Judging(QJsonObject judging,
-                     QHash<QString, Submission *> submissions,
-                     QObject *parent = nullptr);
+    namespace Model
+    {
 
-    int getId();
-    Submission *getSubmission();
-    bool isCorrect();
-signals:
+        class Submission;
 
-public slots:
+        class Judging : public QObject
+        {
+            Q_OBJECT
+        public:
+            explicit Judging(QJsonObject judging,
+                             QHash<QString, Submission *> submissions,
+                             QObject *parent = nullptr);
 
-private:
-    int id;
-    Submission *submission;
-    bool correct;
-};
+            int getId();
+            Submission *getSubmission();
+            bool isCorrect();
+        signals:
 
-} // namespace Model
+        public slots:
+
+        private:
+            int id;
+            Submission *submission;
+            bool correct;
+        };
+
+    } // namespace Model
 } // namespace DJ
 
 #endif // DJ_MODEL_JUDGING_H

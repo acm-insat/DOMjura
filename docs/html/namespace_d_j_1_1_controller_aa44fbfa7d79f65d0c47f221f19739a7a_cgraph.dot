@@ -1,0 +1,11 @@
+digraph "DJ::Controller::problemLessThan"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="LR";
+  Node1 [id="Node000001",label="DJ::Controller::problemLessThan",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Used for sorting the problems."];
+  Node1 -> Node2 [id="edge1_Node000001_Node000002",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="DJ::Model::Problem\l::getShortName",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$class_d_j_1_1_model_1_1_problem.html#a5112088b0d2b4f7f5712c626837341b3",tooltip="Returns the short name of this problem."];
+}

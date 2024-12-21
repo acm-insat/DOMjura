@@ -7,147 +7,177 @@
 #include "contest.h"
 #include "group.h"
 
-namespace DJ {
-namespace View {
-
-MainDialog::MainDialog(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::MainDialog) {
-    ui->setupUi(this);
-}
-
-MainDialog::~MainDialog() {
-    delete ui;
-}
-
-void MainDialog::on_buttonAbout_clicked() {
-    emit aboutClicked();
-}
-
-void MainDialog::on_buttonSettings_clicked() {
-    emit settingsClicked();
-}
-
-void MainDialog::on_buttonConnect_clicked() {
-    emit connectClicked();
-}
-
-void MainDialog::on_buttonStart_clicked() {
-    emit startClicked();
-}
-
-void MainDialog::on_loadContestsButton_clicked()
+namespace DJ
 {
-    this->ui->buttonConnect->setDisabled(true);
-    this->ui->contestsComboBox->setDisabled(true);
-    this->ui->contestsComboBox->clear();
-    emit loadContestsClicked();
-}
+    namespace View
+    {
 
-void MainDialog::setContestsComboboxData(QHash<QString, Model::Contest *> contests) {
-    this->ui->contestsComboBox->setEnabled(true);
-    this->ui->buttonConnect->setEnabled(true);
-    foreach (auto contest, contests){
-        this->ui->contestsComboBox->addItem(contest->getName(), QVariant::fromValue(contest));
-    }
-}
+        MainDialog::MainDialog(QWidget *parent) : QWidget(parent),
+                                                  ui(new Ui::MainDialog)
+        {
+            ui->setupUi(this);
+        }
 
-void MainDialog::hideContest() {
-    this->ui->groupBoxGroups->setEnabled(false);
-    this->ui->groupBoxContest->setEnabled(false);
-    this->ui->groupBoxMode->setEnabled(false);
+        MainDialog::~MainDialog()
+        {
+            delete ui;
+        }
 
-    this->ui->labelContestName->setText("");
-    this->ui->labelContestStart->setText("");
-    this->ui->labelContestFreeze->setText("");
-    this->ui->labelContestEnd->setText("");
-    this->ui->labelContestPenalty->setText("");
+        void MainDialog::on_buttonAbout_clicked()
+        {
+            emit aboutClicked();
+        }
 
-    qDeleteAll(this->groupCheckboxes);
-    this->groupCheckboxes.clear();
-    this->selectedGroupsHash.clear();
-}
+        void MainDialog::on_buttonSettings_clicked()
+        {
+            emit settingsClicked();
+        }
 
-void MainDialog::displayContest(Model::Contest *contest, QHash<QString, Model::Group *> groups) {
-    qDeleteAll(this->groupCheckboxes);
-    this->groupCheckboxes.clear();
+        void MainDialog::on_buttonConnect_clicked()
+        {
+            emit connectClicked();
+        }
 
-    this->ui->groupBoxGroups->setEnabled(true);
-    this->ui->groupBoxContest->setEnabled(true);
+        void MainDialog::on_buttonStart_clicked()
+        {
+            emit startClicked();
+        }
 
-    this->ui->labelContestName->setText(contest->getName());
-    this->ui->labelContestStart->setText(contest->getStart().toString("yyyy-MM-dd hh:mm:ss"));
-    this->ui->labelContestFreeze->setText(contest->getFreeze().toString("yyyy-MM-dd hh:mm:ss"));
-    this->ui->labelContestEnd->setText(contest->getEnd().toString("yyyy-MM-dd hh:mm:ss"));
-    this->ui->labelContestPenalty->setText(QString::number(contest->getPenaltyMinutes()) + " minutes");
+        void MainDialog::on_loadContestsButton_clicked()
+        {
+            this->ui->buttonConnect->setDisabled(true);
+            this->ui->contestsComboBox->setDisabled(true);
+            this->ui->contestsComboBox->clear();
+            emit loadContestsClicked();
+        }
 
-    int row = 0;
-    foreach (auto group, groups) {
-        QString groupText = group->getName();
-        groupText += " (";
-        int numTeams = group->numTeams();
-        groupText += QString::number(numTeams);
-        groupText += " ";
-        groupText += (numTeams == 1) ? "team)" : "teams)";
-        QCheckBox *checkbox = new QCheckBox(groupText);
-        checkbox->setProperty("group", QVariant::fromValue(group));
-        this->ui->gridLayoutGroups->addWidget(checkbox, row, 0);
-        this->groupCheckboxes.append(checkbox);
-        ++row;
+        void MainDialog::setContestsComboboxData(QHash<QString, Model::Contest *> contests)
+        {
+            this->ui->contestsComboBox->setEnabled(true);
+            this->ui->buttonConnect->setEnabled(true);
+            foreach (auto contest, contests)
+            {
+                this->ui->contestsComboBox->addItem(contest->getName(), QVariant::fromValue(contest));
+            }
+        }
 
-        connect(checkbox, &QCheckBox::clicked, this, &MainDialog::groupCheckboxClicked);
-    }
-}
-
-void MainDialog::groupCheckboxClicked(bool checked) {
-    QCheckBox *sender = (QCheckBox *)this->sender();
-    Model::Group *group = sender->property("group").value<Model::Group *>();
-    if (checked) {
-        this->selectedGroupsHash[group->getId()] = group;
-        this->ui->groupBoxMode->setEnabled(true);
-    } else {
-        this->selectedGroupsHash.remove(group->getId());
-        if (this->selectedGroupsHash.isEmpty()) {
+        void MainDialog::hideContest()
+        {
+            this->ui->groupBoxGroups->setEnabled(false);
+            this->ui->groupBoxContest->setEnabled(false);
             this->ui->groupBoxMode->setEnabled(false);
+
+            this->ui->labelContestName->setText("");
+            this->ui->labelContestStart->setText("");
+            this->ui->labelContestFreeze->setText("");
+            this->ui->labelContestEnd->setText("");
+            this->ui->labelContestPenalty->setText("");
+
+            qDeleteAll(this->groupCheckboxes);
+            this->groupCheckboxes.clear();
+            this->selectedGroupsHash.clear();
         }
-    }
-}
 
-QHash<QString, Model::Group *> MainDialog::selectedGroups() {
-    return this->selectedGroupsHash;
-}
+        void MainDialog::displayContest(Model::Contest *contest, QHash<QString, Model::Group *> groups)
+        {
+            qDeleteAll(this->groupCheckboxes);
+            this->groupCheckboxes.clear();
 
-QString MainDialog::getProtocol() {
-    return this->ui->comboProtocol->currentText();
-}
+            this->ui->groupBoxGroups->setEnabled(true);
+            this->ui->groupBoxContest->setEnabled(true);
 
-QString MainDialog::getURL() {
-    return this->ui->lineEditURL->text();
-}
+            this->ui->labelContestName->setText(contest->getName());
+            this->ui->labelContestStart->setText(contest->getStart().toString("yyyy-MM-dd hh:mm:ss"));
+            this->ui->labelContestFreeze->setText(contest->getFreeze().toString("yyyy-MM-dd hh:mm:ss"));
+            this->ui->labelContestEnd->setText(contest->getEnd().toString("yyyy-MM-dd hh:mm:ss"));
+            this->ui->labelContestPenalty->setText(QString::number(contest->getPenaltyMinutes()) + " minutes");
 
-QString MainDialog::getUsername() {
-    return this->ui->lineEditUsername->text();
-}
+            int row = 0;
+            foreach (auto group, groups)
+            {
+                QString groupText = group->getName();
+                groupText += " (";
+                int numTeams = group->numTeams();
+                groupText += QString::number(numTeams);
+                groupText += " ";
+                groupText += (numTeams == 1) ? "team)" : "teams)";
+                QCheckBox *checkbox = new QCheckBox(groupText);
+                checkbox->setProperty("group", QVariant::fromValue(group));
+                this->ui->gridLayoutGroups->addWidget(checkbox, row, 0);
+                this->groupCheckboxes.append(checkbox);
+                ++row;
 
-QString MainDialog::getPassword() {
-    return this->ui->lineEditPassword->text();
-}
-
-Model::Contest* MainDialog::getContest() {
-    return this->ui->contestsComboBox->currentData().value<Model::Contest *>();
-}
-
-MainDialog::DisplayMode MainDialog::getDisplayMode() {
-    if (this->ui->radioModeLive->isChecked()) {
-        if (this->ui->checkDuringFreeze->isChecked()) {
-            return DisplayMode::LIVE_AND_FREEZE;
-        } else {
-            return DisplayMode::LIVE;
+                connect(checkbox, &QCheckBox::clicked, this, &MainDialog::groupCheckboxClicked);
+            }
         }
-    } else {
-        return DisplayMode::RESULTS;
-    }
-}
 
-} // namespace View
+        void MainDialog::groupCheckboxClicked(bool checked)
+        {
+            QCheckBox *sender = (QCheckBox *)this->sender();
+            Model::Group *group = sender->property("group").value<Model::Group *>();
+            if (checked)
+            {
+                this->selectedGroupsHash[group->getId()] = group;
+                this->ui->groupBoxMode->setEnabled(true);
+            }
+            else
+            {
+                this->selectedGroupsHash.remove(group->getId());
+                if (this->selectedGroupsHash.isEmpty())
+                {
+                    this->ui->groupBoxMode->setEnabled(false);
+                }
+            }
+        }
+
+        QHash<QString, Model::Group *> MainDialog::selectedGroups()
+        {
+            return this->selectedGroupsHash;
+        }
+
+        QString MainDialog::getProtocol()
+        {
+            return this->ui->comboProtocol->currentText();
+        }
+
+        QString MainDialog::getURL()
+        {
+            return this->ui->lineEditURL->text();
+        }
+
+        QString MainDialog::getUsername()
+        {
+            return this->ui->lineEditUsername->text();
+        }
+
+        QString MainDialog::getPassword()
+        {
+            return this->ui->lineEditPassword->text();
+        }
+
+        Model::Contest *MainDialog::getContest()
+        {
+            return this->ui->contestsComboBox->currentData().value<Model::Contest *>();
+        }
+
+        MainDialog::DisplayMode MainDialog::getDisplayMode()
+        {
+            if (this->ui->radioModeLive->isChecked())
+            {
+                if (this->ui->checkDuringFreeze->isChecked())
+                {
+                    return DisplayMode::LIVE_AND_FREEZE;
+                }
+                else
+                {
+                    return DisplayMode::LIVE;
+                }
+            }
+            else
+            {
+                return DisplayMode::RESULTS;
+            }
+        }
+
+    } // namespace View
 } // namespace DJ

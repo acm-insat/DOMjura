@@ -1,0 +1,25 @@
+var files_dup =
+[
+    [ "aboutdialog.h", "aboutdialog_8h.html", "aboutdialog_8h" ],
+    [ "contest.h", "contest_8h.html", "contest_8h" ],
+    [ "defines.h", "defines_8h.html", "defines_8h" ],
+    [ "domjudgeapimanager.h", "domjudgeapimanager_8h_source.html", null ],
+    [ "gradientcache.h", "gradientcache_8h.html", "gradientcache_8h" ],
+    [ "group.h", "group_8h.html", "group_8h" ],
+    [ "headergraphicsitem.h", "headergraphicsitem_8h.html", "headergraphicsitem_8h" ],
+    [ "judging.h", "judging_8h_source.html", null ],
+    [ "legendagraphicsitem.h", "legendagraphicsitem_8h.html", "legendagraphicsitem_8h" ],
+    [ "main.cpp", "main_8cpp.html", "main_8cpp" ],
+    [ "maincontroller.h", "maincontroller_8h.html", "maincontroller_8h" ],
+    [ "maindialog.h", "maindialog_8h.html", "maindialog_8h" ],
+    [ "problem.h", "problem_8h.html", "problem_8h" ],
+    [ "problemgraphicsitem.h", "problemgraphicsitem_8h.html", "problemgraphicsitem_8h" ],
+    [ "rankedteam.h", "rankedteam_8h.html", "rankedteam_8h" ],
+    [ "resultswindow.h", "resultswindow_8h.html", "resultswindow_8h" ],
+    [ "settingsdialog.h", "settingsdialog_8h.html", "settingsdialog_8h" ],
+    [ "standingscontroller.h", "standingscontroller_8h.html", "standingscontroller_8h" ],
+    [ "submission.h", "submission_8h_source.html", null ],
+    [ "team.h", "team_8h.html", "team_8h" ],
+    [ "teamgraphicsitem.h", "teamgraphicsitem_8h.html", "teamgraphicsitem_8h" ],
+    [ "winnergraphicsitem.h", "winnergraphicsitem_8h.html", "winnergraphicsitem_8h" ]
+];

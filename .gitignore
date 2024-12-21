@@ -1,6 +1,8 @@
 DOMjura.pro.user
 DOMjura.pro.user.*
+CMakeLists.txt.user
+CMakeLists.txt.user.*
 .idea
-CMakeLists.txt
 moc_*
 *.o
+build
